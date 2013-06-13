@@ -76,7 +76,9 @@ $.get('/metadata/'+identifier, function(data) {
     var metadata_box = $('<div id="metadata_box"></div>').css('dispaly', 'table').css('width', '100%');
     prev_element.after(metadata_box);
     if ('description' in metadata) {
-        var description = $('<div archive_ajaxify="description">'+metadata['description']+'</div>').addClass('hover');
+        var text = metadata['description'].replace(/\n/g, '<br/>\n');
+        console.log(text);
+        var description = $('<div archive_ajaxify="description">'+text+'</div>').addClass('hover');
         fields_to_edit = fields_to_edit.add(description);
         metadata_box.append(description);
     }
@@ -198,6 +200,12 @@ $.get('/metadata/'+identifier, function(data) {
         input.select();
 
     });
+
+    //add metadata links to dl box
+    $('#dl').append('<a href="/download/'+identifier+'/'+identifier+'_files.xml">Files.xml</a><br>');
+    $('#dl').append('<a href="/download/'+identifier+'/'+identifier+'_meta.xml">Meta.xml</a><br>');
+    $('#dl').append('<a href="/metadata/'+identifier+'">Json</a><br>');
+
 });
 
 })();
